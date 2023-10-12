@@ -33,4 +33,8 @@ class CheckItemsController < ApplicationController
       format.json  { render :json => ranked.to_json }
     end
   end
+
+  def new
+    @item_to_check = CheckItem.new
+  end
 end
