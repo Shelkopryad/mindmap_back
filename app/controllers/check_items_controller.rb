@@ -1,7 +1,8 @@
 class CheckItemsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token, only: [:index, :add_new]
+
   def index
-    Rails.logger.info params[:query]
     tags = params[:query].split(/[ ,]/).select { |it| !it.empty? }
 
     all_items_to_check = {}
@@ -18,23 +19,36 @@ class CheckItemsController < ApplicationController
       end
     end
 
-    ranked = {}
+    right_array = []
     all_items_to_check.each do |item, tag_arr|
-      if tags.size == tag_arr.size
-        ranked[:high] ||= []
-        ranked[:high] << { item => tag_arr }
-      else
-        ranked[:low] ||= []
-        ranked[:low] << { item => tag_arr }
-      end
+      right_array << {
+        'item_to_check' => item,
+        'tags' => tag_arr
+      }
     end
 
     respond_to do |format|
-      format.json  { render :json => ranked.to_json }
+      format.json  { render :json => right_array.to_json }
     end
   end
 
-  def new
-    @item_to_check = CheckItem.new
+  def add_new
+    binding.pry
+    item_to_check = CheckItem.create(item_to_check: params['item_to_check'], to_test: false)
+
+    tags = params['tags'].split(/[ ,]/).select { |it| !it.empty? }
+    tags_arr = []
+    tags.each do |tag|
+      if Tag.exists?(tag: tag)
+        tags_arr << Tag.find_by(tag: tag).id
+      else
+        new_tag = Tag.create(tag: tag)
+        tags_arr << new_tag.id if new_tag.persisted?
+      end
+    end
+
+    tags_arr.each do |tag_id|
+      CheckItemTag.create(check_item_id: item_to_check.id, tag_id: tag_id)
+    end
   end
 end

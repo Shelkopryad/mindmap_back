@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root "check_items#index"
+  post 'check_items/add_new', to: 'check_items#add_new'
   resources "check_items"
 end
