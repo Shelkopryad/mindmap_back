@@ -5,35 +5,29 @@ class CheckItemsController < ApplicationController
   def index
     tags = params[:query].split(/[ ,]/).select { |it| !it.empty? }
 
-    all_items_to_check = {}
+    items_to_check = []
     tags.each do |tag|
       items = CheckItem.joins(:tags).where(tags: { tag: tag }).map { |it| it.item_to_check }
       items.each do |item|
-        if all_items_to_check.keys.include?(item)
-          value = all_items_to_check[item]
-          value << tag
-          all_items_to_check[item] = value
-        else
-          all_items_to_check[item] = [tag]
-        end
+        items_to_check << item unless items_to_check.include?(item)
       end
     end
 
-    right_array = []
-    all_items_to_check.each do |item, tag_arr|
-      right_array << {
-        'item_to_check' => item,
-        'tags' => tag_arr
+    result = []
+    items_to_check.each do |item_to_check|
+      item_tags = Tag.joins(:check_items).where(check_items: { item_to_check: item_to_check }).map(&:tag)
+      result << {
+        'item_to_check' => item_to_check,
+        'tags' => item_tags.sort!
       }
     end
 
     respond_to do |format|
-      format.json  { render :json => right_array.to_json }
+      format.json  { render :json => result.to_json }
     end
   end
 
   def add_new
-    binding.pry
     item_to_check = CheckItem.create(item_to_check: params['item_to_check'], to_test: false)
 
     tags = params['tags'].split(/[ ,]/).select { |it| !it.empty? }
@@ -50,5 +44,10 @@ class CheckItemsController < ApplicationController
     tags_arr.each do |tag_id|
       CheckItemTag.create(check_item_id: item_to_check.id, tag_id: tag_id)
     end
+  end
+
+  private
+  def enrich
+
   end
 end
