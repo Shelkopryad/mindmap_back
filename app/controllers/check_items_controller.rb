@@ -55,6 +55,7 @@ class CheckItemsController < ApplicationController
   end
 
   def select_to_test
+    ids = params.keys.each { |it| it.scan(/to_text \d+/) }.map(&:key)
     binding.pry
   end
 end

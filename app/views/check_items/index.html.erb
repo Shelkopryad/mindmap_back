@@ -10,11 +10,10 @@
 
   <% unless @result.empty? %>
     <%= form_tag(check_items_select_to_test_path, method: :post) do %>
-      <% ids = [] %>>
       <% @result.each do |item| %>
         <div>
           <%= "#{item['item_to_check'].item_to_check} : #{item['tags'].map(&:tag)}" %>
-          <%= check_box_tag(:to_test, value: item['item_to_check'].id) %>
+          <%= check_box_tag("to_test #{item['item_to_check'].id}".to_sym) %>
         </div>
       <% end %>
       <%= submit_tag("Select to test") %>
