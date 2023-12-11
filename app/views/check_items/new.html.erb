@@ -1,0 +1,20 @@
+<div>
+  <%= link_to 'Back', check_items_path %>
+</div>
+<div>
+  <%= form_with model: @check_item do |form| %>
+    <div>
+      <%= form.label :item_to_check %><br>
+      <%= form.text_field :item_to_check %>
+    </div>
+
+    <div>
+      <%= form.label :tags %><br>
+      <%= form.text_field :tags %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>

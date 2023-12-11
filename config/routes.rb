@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root "check_items#index"
-  post 'check_items/add_new', to: 'check_items#add_new'
-  resources "check_items"
+  get 'check_items/search', to: 'check_items#search'
+  post 'check_items/select_to_test', to: 'check_items#select_to_test'
+  resources :check_items
 end

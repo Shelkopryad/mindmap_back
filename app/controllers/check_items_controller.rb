@@ -1,36 +1,44 @@
 class CheckItemsController < ApplicationController
 
-  skip_before_action :verify_authenticity_token, only: [:index, :add_new]
+  skip_before_action :verify_authenticity_token, only: [:index]
 
   def index
-    tags = params[:query].split(/[ ,]/).select { |it| !it.empty? }
+    @result = []
+  end
 
+  def search
+    tags = params[:search].split(/[ ,]/).select { |it| !it.empty? }
     items_to_check = []
     tags.each do |tag|
-      items = CheckItem.joins(:tags).where(tags: { tag: tag }).map { |it| it.item_to_check }
+      items = CheckItem.joins(:tags).where(tags: { tag: tag }) #.map { |it| it.item_to_check }
       items.each do |item|
         items_to_check << item unless items_to_check.include?(item)
       end
     end
 
-    result = []
+    @result = []
     items_to_check.each do |item_to_check|
-      item_tags = Tag.joins(:check_items).where(check_items: { item_to_check: item_to_check }).map(&:tag)
-      result << {
+      item_tags = Tag.joins(:check_items).where(check_items: { item_to_check: item_to_check.item_to_check }) #.map(&:tag)
+      @result << {
         'item_to_check' => item_to_check,
-        'tags' => item_tags.sort!
+        'tags' => item_tags.sort
       }
     end
 
     respond_to do |format|
-      format.json  { render :json => result.to_json }
+      format.html { render 'index' }
+      format.json  { render :json => @result.to_json }
     end
   end
 
-  def add_new
-    item_to_check = CheckItem.create(item_to_check: params['item_to_check'], to_test: false)
+  def new
+    @check_item = CheckItem.new
+  end
 
-    tags = params['tags'].split(/[ ,]/).select { |it| !it.empty? }
+  def create
+    item_to_check = CheckItem.create(item_to_check: params['check_item']['item_to_check'], to_test: false)
+
+    tags = params['check_item']['tags'].split(/[ ,]/).select { |it| !it.empty? }
     tags_arr = []
     tags.each do |tag|
       if Tag.exists?(tag: tag)
@@ -46,8 +54,7 @@ class CheckItemsController < ApplicationController
     end
   end
 
-  private
-  def enrich
-
+  def select_to_test
+    binding.pry
   end
 end
