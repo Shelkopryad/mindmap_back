@@ -1,0 +1,23 @@
+<div>
+  <% unless @selected.empty? %>
+    <%= form_tag(check_items_tested_path, method: :post) do %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Task</th>
+          <th scope="col">Tested</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @selected.each do |item| %>
+          <tr>
+            <td><%= item.item_to_check %></td>
+            <td><%= check_box_tag("to_test #{item.id}".to_sym, item.id) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= submit_tag("Tested", class: "btn btn-light") %>
+    <% end %>
+  <% end %>
+</div>

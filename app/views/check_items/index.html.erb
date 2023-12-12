@@ -1,24 +1,40 @@
 <div>
-  <%= link_to 'New', new_check_item_path %>
-</div>
-<div>
-
-  <%= form_tag(check_items_search_path, method: :get) do %>
-    <%= text_field_tag(:search, params[:search]) %>
-    <%= submit_tag('Search') %>
+  <%= form_tag(check_items_search_path, method: :get, class: "d-flex") do %>
+    <%= text_field_tag(:search, params[:search], class: "form-control me-2") %>
+    <%= submit_tag('Search', class: "btn btn-outline-success") %>
   <% end %>
+
 
   <% unless @result.empty? %>
+    <br/>
     <%= form_tag(check_items_select_to_test_path, method: :post) do %>
-      <% @result.each do |item| %>
-        <div>
-          <%= "#{item['item_to_check'].item_to_check} : #{item['tags'].map(&:tag)}" %>
-          <%= check_box_tag("to_test #{item['item_to_check'].id}".to_sym) %>
-        </div>
-      <% end %>
-      <%= submit_tag("Select to test") %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Task</th>
+          <th scope="col">Tags</th>
+          <th scope="col">Tested</th>
+          <th scope="col">To test?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @result.each do |item| %>
+          <tr>
+            <td><%= item['item_to_check'].item_to_check %></td>
+            <td><%= item['tags'].map(&:tag) %></td>
+            <td>
+              <% if !item['item_to_check'].to_test %>
+                <span class="circle-green" aria-hidden="true"></span>
+              <% else %>
+                <span class="circle-red" aria-hidden="true"></span>
+              <% end %>
+            </td>
+            <td><%= check_box_tag("to_test #{item['item_to_check'].id}".to_sym, item['item_to_check'].id) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= submit_tag("Select to test", class: "btn btn-light") %>
     <% end %>
   <% end %>
-
-
 </div>

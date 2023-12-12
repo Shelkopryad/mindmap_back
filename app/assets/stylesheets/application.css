@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+.circle-red {
+    background-color: red;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.circle-green {
+    background-color: green;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}

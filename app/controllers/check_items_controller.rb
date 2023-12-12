@@ -52,10 +52,31 @@ class CheckItemsController < ApplicationController
     tags_arr.each do |tag_id|
       CheckItemTag.create(check_item_id: item_to_check.id, tag_id: tag_id)
     end
+
+    redirect_to new_check_item_path
   end
 
   def select_to_test
-    ids = params.keys.each { |it| it.scan(/to_text \d+/) }.map(&:key)
-    binding.pry
+    update_items params, true
+
+    redirect_to check_items_path
+  end
+
+  def tested
+    update_items params, false
+
+    redirect_to check_items_selected_to_test_path
+  end
+
+  def selected_to_test
+    @selected = CheckItem.where(to_test: true)
+  end
+
+  private
+  def update_items(params, to_test:)
+    ids = params.keys.select{ |it| it.include?('to_test') }.each.map { |key| params[key] }
+    ids.each do |id|
+      CheckItem.find(id.to_i).update(to_test: to_test)
+    end
   end
 end

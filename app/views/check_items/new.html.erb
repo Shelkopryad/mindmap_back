@@ -1,20 +1,18 @@
 <div>
-  <%= link_to 'Back', check_items_path %>
-</div>
-<div>
   <%= form_with model: @check_item do |form| %>
     <div>
       <%= form.label :item_to_check %><br>
-      <%= form.text_field :item_to_check %>
+      <%= form.text_area :item_to_check, class: "form-control" %>
     </div>
 
     <div>
       <%= form.label :tags %><br>
-      <%= form.text_field :tags %>
+      <%= form.text_field :tags, class: "form-control", value: '' %>
     </div>
+    <br/>
 
     <div>
-      <%= form.submit %>
+      <%= form.submit class: "btn btn-light" %>
     </div>
   <% end %>
 </div>
