@@ -57,13 +57,13 @@ class CheckItemsController < ApplicationController
   end
 
   def select_to_test
-    update_items params, true
+    update_items params, to_test: true
 
     redirect_to check_items_path
   end
 
   def tested
-    update_items params, false
+    update_items params, to_test: false
 
     redirect_to check_items_selected_to_test_path
   end
