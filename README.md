@@ -8,15 +8,15 @@
 
 На странице Search можно выполнять поиск по тегу/ам (например "order" или "order product"). Разделители " " или ","
 
-![](/Users/artec3d/Desktop/Снимок экрана 2023-12-13 в 09.27.30.png)
+<img src="./readme_img/search.png"/>
 
 Выходит таблица с CheckItem с возможностью отметить нужные для теста
 Если у CheckItem параметр to_test = true, то цветовое обозначение в столбце Tested красное, если  false, - зелёное
 
 CheckItem с параметром to_test = true отображаются на странице "In test". Там есть возможность отметить проверенные и проставить флаг Tested
 
-![](/Users/artec3d/Desktop/Снимок экрана 2023-12-13 в 09.30.18.png)
+<img src="./readme_img/in_test.png"/>
 
 На странице New можно создавать новые проверки
 
-![](/Users/artec3d/Desktop/Снимок экрана 2023-12-13 в 09.30.53.png)
+<img src="./readme_img/new.png"/>
