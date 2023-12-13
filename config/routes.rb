@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'check_items/search', to: 'check_items#search'
   post 'check_items/select_to_test', to: 'check_items#select_to_test'
   resources :check_items
+  resources :infrastructure
 end
