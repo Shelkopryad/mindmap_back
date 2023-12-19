@@ -7,32 +7,33 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 CheckItem.new(
-  item_to_check: 'заказ открывается в МА и CRM и показывает одинаковые данные',
-  test_case: "Создать заказ в MA;\nОткрыть в CRM",
+  item_to_check: 'Будь у вас 10000 воинов, вы не справитесь',
+  test_case: "Привлечь 9999 воинов => проверить, что не справимся;\nПривлечь 10000 воинов => проверить, что не справимся;\nПривлечь большее количество воинов => проверить, что справимся",
   to_test: false
 ).save
 CheckItem.new(
-  item_to_check: 'экспорт данных по заказам',
-  test_case: "Отфильтровать;\nЭкспортировать;\nВ отчёте всё ок",
+  item_to_check: 'Шесть тысяч воинов. Меньше половины из того, на что я рассчитывал',
+  test_case: "Привлечь 6000 воинов => проверить, что меньше половины;\nПривлечь 6002 воина => проверить, что больше половины",
   to_test: false
 ).save
 CheckItem.new(
-  item_to_check: 'изменение цены у продукта отображается при добавлении его в заказ',
-  test_case: "Изменить цену у продукта в МА;\nСоздать заказ и добавить туда продукт;\nУбдиться, что у него соответствующая цена",
+  item_to_check: 'Мне нет здесь покоя',
+  test_case: "Находясь здесь, убедиться, что покоя нет;\nПерейти в другое место, убедиться, что покой есть",
   to_test: false
 ).save
 CheckItem.new(
-  item_to_check: 'продукт создаётся и виден как в МА так и в CRM',
-  test_case: "Создать продукт в МА;\nЗайти в CRM и увидеть продукт",
+  item_to_check: 'Вам ли кланяться, друзья мои?',
+  test_case: "Проверить, что при соблюдении всех условий хоббитам не надо кланяться;",
   to_test: false
 ).save
 
-Tag.new(tag: 'product').save
-Tag.new(tag: 'order').save
+Tag.new(tag: 'teoden').save
+Tag.new(tag: 'boromir').save
+Tag.new(tag: 'aragorn').save
 
 CheckItemTag.new(check_item_id: 1, tag_id: 2).save
-CheckItemTag.new(check_item_id: 2, tag_id: 2).save
+CheckItemTag.new(check_item_id: 2, tag_id: 1).save
+CheckItemTag.new(check_item_id: 2, tag_id: 3).save
 CheckItemTag.new(check_item_id: 3, tag_id: 2).save
-CheckItemTag.new(check_item_id: 3, tag_id: 1).save
-CheckItemTag.new(check_item_id: 4, tag_id: 1).save
+CheckItemTag.new(check_item_id: 4, tag_id: 3).save
 
