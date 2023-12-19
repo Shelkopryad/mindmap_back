@@ -18,9 +18,22 @@
         </tr>
         </thead>
         <tbody>
-        <% @result.each do |item| %>
+
+        <% @result.each_with_index do |item, index| %>
           <tr>
-            <td><%= item['item_to_check'].item_to_check %></td>
+            <td>
+              <a data-bs-toggle="collapse" href="#collapseExample_<%= index %>" aria-expanded="false" aria-controls="collapseExample">
+                <%= item['item_to_check'].item_to_check %>
+              </a>
+              <div class="collapse" id="collapseExample_<%= index %>">
+                <br />
+                <div>
+                  <% item['item_to_check'].test_case.split("\n").each do |step| %>
+                    <p class="card-text"><%= step %></p>
+                  <% end %>
+                </div>
+              </div>
+            </td>
             <td><%= item['tags'].map(&:tag) %></td>
             <td>
               <% if !item['item_to_check'].to_test %>

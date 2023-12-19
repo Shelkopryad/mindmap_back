@@ -6,10 +6,26 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-CheckItem.new(item_to_check: 'заказ открывается в МА и CRM и показывает одинаковые данные', to_test: false).save
-CheckItem.new(item_to_check: 'экспорт данных по заказам', to_test: false).save
-CheckItem.new(item_to_check: 'изменение цены у продукта отображается при добавлении его в заказ', to_test: false).save
-CheckItem.new(item_to_check: 'продукт создаётся и виден как в МА так и в CRM', to_test: false).save
+CheckItem.new(
+  item_to_check: 'заказ открывается в МА и CRM и показывает одинаковые данные',
+  test_case: "Создать заказ в MA;\nОткрыть в CRM",
+  to_test: false
+).save
+CheckItem.new(
+  item_to_check: 'экспорт данных по заказам',
+  test_case: "Отфильтровать;\nЭкспортировать;\nВ отчёте всё ок",
+  to_test: false
+).save
+CheckItem.new(
+  item_to_check: 'изменение цены у продукта отображается при добавлении его в заказ',
+  test_case: "Изменить цену у продукта в МА;\nСоздать заказ и добавить туда продукт;\nУбдиться, что у него соответствующая цена",
+  to_test: false
+).save
+CheckItem.new(
+  item_to_check: 'продукт создаётся и виден как в МА так и в CRM',
+  test_case: "Создать продукт в МА;\nЗайти в CRM и увидеть продукт",
+  to_test: false
+).save
 
 Tag.new(tag: 'product').save
 Tag.new(tag: 'order').save
