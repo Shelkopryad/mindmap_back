@@ -1,3 +1,12 @@
+Собрать и запустить
+```shell
+docker build -t mindmap .
+docker-compose up -d
+docker exec -it mindmap /bin/bash
+rake db:migrate
+```
+
+
 Сейчас реализация такая:
 
 Есть сущность CheckItem. В ней описана проверка и есть булево поле to_test
