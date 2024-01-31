@@ -4,14 +4,28 @@
       <table class="table">
         <thead>
         <tr>
-          <th scope="col">Task</th>
-          <th scope="col">Tested</th>
+          <th class="col-10" scope="col">Task</th>
+          <th class="col-2" scope="col">Tested</th>
         </tr>
         </thead>
         <tbody>
-        <% @selected.each do |item| %>
+        <% @selected.each_with_index do |item, index| %>
           <tr>
-            <td><%= item.case_name %></td>
+            <td>
+              <p data-bs-toggle="collapse" href="#collapseExample_<%= index %>" aria-expanded="false" aria-controls="collapseExample">
+                <%= item.case_name %>
+              </p>
+              <div class="collapse" id="collapseExample_<%= index %>">
+                <br />
+                <div>
+                  <ul class="list-unstyled">
+                    <% item.test_case.split("\n").each do |step| %>
+                      <li><small class="text-muted"><%= step %></small></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </td>
             <td><%= check_box_tag("to_test #{item.id}".to_sym, item.id) %></td>
           </tr>
         <% end %>
