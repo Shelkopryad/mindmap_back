@@ -11,7 +11,7 @@
         <tbody>
         <% @selected.each do |item| %>
           <tr>
-            <td><%= item.item_to_check %></td>
+            <td><%= item.case_name %></td>
             <td><%= check_box_tag("to_test #{item.id}".to_sym, item.id) %></td>
           </tr>
         <% end %>

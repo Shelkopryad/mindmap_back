@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094633) do
   end
 
   create_table "check_items", force: :cascade do |t|
-    t.string "item_to_check"
+    t.string "case_name"
     t.text "test_case"
     t.boolean "to_test"
     t.datetime "created_at", null: false

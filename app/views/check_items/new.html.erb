@@ -1,8 +1,13 @@
 <div>
   <%= form_with model: @check_item do |form| %>
     <div>
-      <%= form.label :item_to_check %><br>
-      <%= form.text_area :item_to_check, class: "form-control" %>
+      <%= form.label :case_name %><br>
+      <%= form.text_field :case_name, class: "form-control" %>
+    </div>
+
+    <div>
+      <%= form.label :test_case %><br>
+      <%= form.text_area :test_case, class: "form-control" %>
     </div>
 
     <div>

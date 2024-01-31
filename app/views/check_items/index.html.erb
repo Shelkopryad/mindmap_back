@@ -1,6 +1,14 @@
 <div>
+  <div>
+    <% Tag.all.each do |tag| %>
+      <a class="badge bg-secondary" data-controller="index" data-action="click->index#search" data-value="<%= tag.tag %>"><%= tag.tag %></a>
+    <% end %>
+  </div>
+
+  <br />
+
   <%= form_tag(check_items_search_path, method: :get, class: "d-flex") do %>
-    <%= text_field_tag(:search, params[:search], class: "form-control me-2") %>
+    <%= text_field_tag(:search, params[:search], class: "form-control me-2", id: "search_field") %>
     <%= submit_tag('Search', class: "btn btn-outline-success") %>
   <% end %>
 
@@ -11,10 +19,10 @@
       <table class="table">
         <thead>
         <tr>
-          <th scope="col">Task</th>
-          <th scope="col">Tags</th>
-          <th scope="col">Tested</th>
-          <th scope="col">To test?</th>
+          <th class="col-8" scope="col">Task</th>
+          <th class="col-2" scope="col">Tags</th>
+          <th class="col-1" scope="col">Tested</th>
+          <th class="col-1" scope="col">To test?</th>
         </tr>
         </thead>
         <tbody>
@@ -23,7 +31,7 @@
           <tr>
             <td>
               <a data-bs-toggle="collapse" href="#collapseExample_<%= index %>" aria-expanded="false" aria-controls="collapseExample">
-                <%= item['item_to_check'].item_to_check %>
+                <%= item['item_to_check'].case_name %>
               </a>
               <div class="collapse" id="collapseExample_<%= index %>">
                 <br />
@@ -34,7 +42,11 @@
                 </div>
               </div>
             </td>
-            <td><%= item['tags'].map(&:tag) %></td>
+            <td>
+              <% item['tags'].each do |tag| %>
+                <span><%= tag.tag %></span>
+              <% end %>
+            </td>
             <td>
               <% if !item['item_to_check'].to_test %>
                 <span class="circle-green" aria-hidden="true"></span>
