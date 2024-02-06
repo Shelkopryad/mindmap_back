@@ -1,13 +1,13 @@
 <div>
   <div>
-    <% Tag.all.each do |tag| %>
+    <% TestCaseTag.all.each do |tag| %>
       <a class="badge bg-secondary" data-controller="index" data-action="click->index#search" data-value="<%= tag.tag %>"><%= tag.tag %></a>
     <% end %>
   </div>
 
   <br />
 
-  <%= form_tag(check_items_search_path, method: :get, class: "d-flex") do %>
+  <%= form_tag(test_cases_search_path, method: :get, class: "d-flex") do %>
     <%= text_field_tag(:search, params[:search], class: "form-control me-2", id: "search_field") %>
     <%= submit_tag('Search', class: "btn btn-outline-success") %>
   <% end %>
@@ -15,7 +15,7 @@
 
   <% unless @result.empty? %>
     <br/>
-    <%= form_tag(check_items_select_to_test_path, method: :post) do %>
+    <%= form_tag(test_cases_select_to_test_path, method: :post) do %>
       <table class="table">
         <thead>
         <tr>
@@ -31,12 +31,12 @@
           <tr>
             <td>
               <p data-bs-toggle="collapse" href="#collapseExample_<%= index %>" aria-expanded="false" aria-controls="collapseExample">
-                <%= item['item_to_check'].case_name %>
+                <%= item.name %>
               </p>
               <div class="collapse" id="collapseExample_<%= index %>">
                 <div>
                   <ul class="list-unstyled">
-                    <% item['item_to_check'].test_case.split("\n").each do |step| %>
+                    <% item.steps.split("\n").each do |step| %>
                       <li><small class="text-muted"><%= step %></small></li>
                     <% end %>
                   </ul>
@@ -44,18 +44,18 @@
               </div>
             </td>
             <td>
-              <% item['tags'].each do |tag| %>
+              <% item.test_case_tags.each do |tag| %>
                 <small class="text-muted"><%= tag.tag %></small>
               <% end %>
             </td>
             <td>
-              <% if !item['item_to_check'].to_test %>
+              <% if !item.to_test %>
                 <span class="circle-green" aria-hidden="true"></span>
               <% else %>
                 <span class="circle-red" aria-hidden="true"></span>
               <% end %>
             </td>
-            <td><%= check_box_tag("to_test #{item['item_to_check'].id}".to_sym, item['item_to_check'].id) %></td>
+            <td><%= check_box_tag("to_test #{item.id}".to_sym, item.id) %></td>
           </tr>
         <% end %>
         </tbody>

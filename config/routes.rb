@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root "check_items#index"
-  get 'check_items/selected_to_test', to: "check_items#selected_to_test"
-  post 'check_items/tested', to: "check_items#tested"
-  get 'check_items/search', to: 'check_items#search'
-  post 'check_items/select_to_test', to: 'check_items#select_to_test'
-  resources :check_items
+  root "test_cases#index"
+  get 'test_cases/selected_to_test', to: "test_cases#selected_to_test"
+  post 'test_cases/tested', to: "test_cases#tested"
+  get 'test_cases/search', to: 'test_cases#search'
+  post 'test_cases/select_to_test', to: 'test_cases#select_to_test'
+  resources :test_cases
   resources :infrastructure
 end

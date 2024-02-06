@@ -6,34 +6,36 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-CheckItem.new(
-  case_name: 'Будь у вас 10000 воинов, вы не справитесь',
-  test_case: "Привлечь 9999 воинов => проверить, что не справимся;\nПривлечь 10000 воинов => проверить, что не справимся;\nПривлечь большее количество воинов => проверить, что справимся",
-  to_test: false
-).save
-CheckItem.new(
-  case_name: 'Шесть тысяч воинов. Меньше половины из того, на что я рассчитывал',
-  test_case: "Привлечь 6000 воинов => проверить, что меньше половины;\nПривлечь 6002 воина => проверить, что больше половины",
-  to_test: false
-).save
-CheckItem.new(
-  case_name: 'Мне нет здесь покоя',
-  test_case: "Находясь здесь, убедиться, что покоя нет;\nПерейти в другое место, убедиться, что покой есть",
-  to_test: false
-).save
-CheckItem.new(
-  case_name: 'Вам ли кланяться, друзья мои?',
-  test_case: "Проверить, что при соблюдении всех условий хоббитам не надо кланяться;",
-  to_test: false
-).save
+TestCaseTag.create(tag: 'teoden')
+TestCaseTag.create(tag: 'boromir')
+TestCaseTag.create(tag: 'aragorn')
 
-Tag.new(tag: 'teoden').save
-Tag.new(tag: 'boromir').save
-Tag.new(tag: 'aragorn').save
+current = TestCase.create(
+  name: 'Будь у вас 10000 воинов, вы не справитесь',
+  steps: "Привлечь 9999 воинов => проверить, что не справимся;\nПривлечь 10000 воинов => проверить, что не справимся;\nПривлечь большее количество воинов => проверить, что справимся",
+  to_test: false
+)
+current.test_case_tags << TestCaseTag.find(2)
 
-CheckItemTag.new(check_item_id: 1, tag_id: 2).save
-CheckItemTag.new(check_item_id: 2, tag_id: 1).save
-CheckItemTag.new(check_item_id: 2, tag_id: 3).save
-CheckItemTag.new(check_item_id: 3, tag_id: 2).save
-CheckItemTag.new(check_item_id: 4, tag_id: 3).save
+current = TestCase.create(
+  name: 'Шесть тысяч воинов. Меньше половины из того, на что я рассчитывал',
+  steps: "Привлечь 6000 воинов => проверить, что меньше половины;\nПривлечь 6002 воина => проверить, что больше половины",
+  to_test: false
+)
+current.test_case_tags << TestCaseTag.find(1)
+current.test_case_tags << TestCaseTag.find(3)
 
+
+current = TestCase.create(
+  name: 'Мне нет здесь покоя',
+  steps: "Находясь здесь, убедиться, что покоя нет;\nПерейти в другое место, убедиться, что покой есть",
+  to_test: false
+)
+current.test_case_tags << TestCaseTag.find(2)
+
+current = TestCase.create(
+  name: 'Вам ли кланяться, друзья мои?',
+  steps: "Проверить, что при соблюдении всех условий хоббитам не надо кланяться;",
+  to_test: false
+)
+current.test_case_tags << TestCaseTag.find(3)

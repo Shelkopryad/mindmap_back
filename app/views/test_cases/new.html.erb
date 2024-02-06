@@ -1,13 +1,13 @@
 <div>
-  <%= form_with model: @check_item do |form| %>
+  <%= form_with model: @test_case do |form| %>
     <div>
-      <%= form.label :case_name %><br>
-      <%= form.text_field :case_name, class: "form-control" %>
+      <%= form.label :name %><br>
+      <%= form.text_field :name, class: "form-control" %>
     </div>
 
     <div>
-      <%= form.label :test_case %><br>
-      <%= form.text_area :test_case, class: "form-control", rows: "7" %>
+      <%= form.label :steps %><br>
+      <%= form.text_area :steps, class: "form-control", rows: "7" %>
     </div>
 
     <div>
