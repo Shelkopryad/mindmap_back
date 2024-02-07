@@ -16,16 +16,16 @@
 
 .circle-red {
     background-color: red;
-    height: 20px;
-    width: 20px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
     display: inline-block;
 }
 
 .circle-green {
     background-color: green;
-    height: 20px;
-    width: 20px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
     display: inline-block;
 }

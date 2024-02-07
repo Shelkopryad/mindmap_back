@@ -10,7 +10,7 @@ class TestCasesController < ApplicationController
     @result = []
     tags_for_search = params[:search].split(/[ ,]/).reject(&:empty?)
     tags_for_search.each do |tag|
-      @result += TestCaseTag.find_by_tag(tag).test_cases if TestCaseTag.exists?(tag: tag.downcase)
+      @result += TestCase.by_tag(tag) if TestCaseTag.exists?(tag: tag.downcase)
     end
 
     respond_to do |format|
@@ -25,13 +25,15 @@ class TestCasesController < ApplicationController
 
   def create
     new_case = TestCase.create(name: params[:test_case][:name], steps: params[:test_case][:steps], to_test: false)
-    tags = params[:test_case][:tags].split(/[ ,]/).reject(&:empty)
-    tags.each do |tag|
-      if TestCaseTag.exists?(tag: tag.downcase)
-        new_case.test_case_tags << TestCaseTag.find_by_tag(tag)
-      else
-        new_tag = TestCaseTag.create(tag: tag.downcase)
-        new_case.test_case_tags << new_tag
+    if new_case.valid?
+      tags = params[:test_case][:tags].split(/[ ,]/).reject(&:empty?)
+      tags.each do |tag|
+        if TestCaseTag.exists?(tag: tag.downcase)
+          new_case.test_case_tags << TestCaseTag.find_by_tag(tag)
+        else
+          new_tag = TestCaseTag.create(tag: tag.downcase)
+          new_case.test_case_tags << new_tag
+        end
       end
     end
 
@@ -51,7 +53,7 @@ class TestCasesController < ApplicationController
   end
 
   def selected_to_test
-    @selected = TestCase.where(to_test: true)
+    @selected = TestCase.in_test
   end
 
   private

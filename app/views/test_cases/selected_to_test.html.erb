@@ -4,8 +4,9 @@
       <table class="table">
         <thead>
         <tr>
-          <th class="col-10" scope="col">Task</th>
-          <th class="col-2" scope="col">Tested</th>
+          <th class="col-9" scope="col">Task</th>
+          <th class="col-2" scope="col">Tags</th>
+          <th class="col-1" scope="col">Tested</th>
         </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                   </ul>
                 </div>
               </div>
+            </td>
+            <td>
+              <small class="text-muted"><%= item.test_case_tags.map(&:tag).join(', ') %></small>
             </td>
             <td><%= check_box_tag("to_test #{item.id}".to_sym, item.id) %></td>
           </tr>
