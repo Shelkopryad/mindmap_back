@@ -10,13 +10,11 @@ class TestCasesController < ApplicationController
     @result = []
     tags_for_search = params[:search].split(/[ ,]/).reject(&:empty?)
     tags_for_search.each do |tag|
-      @result += TestCase.by_tag(tag) if TestCaseTag.exists?(tag: tag.downcase)
+      @result << TestCase.by_tag(tag) if TestCaseTag.exists?(tag: tag.downcase)
     end
 
-    respond_to do |format|
-      format.html { render 'index' }
-      format.json  { render :json => @result.to_json }
-    end
+    @result.flatten!
+    render :index
   end
 
   def new
@@ -24,9 +22,9 @@ class TestCasesController < ApplicationController
   end
 
   def create
-    new_case = TestCase.create(name: params[:test_case][:name], steps: params[:test_case][:steps], to_test: false)
+    new_case = TestCase.create(test_case_params)
     if new_case.valid?
-      tags = params[:test_case][:tags].split(/[ ,]/).reject(&:empty?)
+      tags = tag_params.split(/[ ,]/).reject(&:empty?)
       tags.each do |tag|
         if TestCaseTag.exists?(tag: tag.downcase)
           new_case.test_case_tags << TestCaseTag.find_by_tag(tag)
@@ -57,12 +55,18 @@ class TestCasesController < ApplicationController
   end
 
   private
+  def test_case_params
+    params.require(:test_case).permit(:name, :steps).merge(to_test: false)
+  end
+
+  def tag_params
+    params.require(:test_case).permit(:tags).values.first
+  end
+
   def update_items(params, to_test:)
     ids = params.keys.select{ |it| it.include?('to_test') }.each.map { |key| params[key] }
     ids.each do |id|
       TestCase.find(id.to_i).update(to_test: to_test)
     end
   end
-
-
 end
