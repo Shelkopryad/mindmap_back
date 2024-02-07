@@ -1,14 +1,14 @@
-<div>
+<div class="container">
   <div>
+    <span>Available tags: </span>
     <% TestCaseTag.all.each do |tag| %>
-      <a class="badge bg-secondary" data-controller="index" data-action="click->index#search" data-value="<%= tag.tag %>"><%= tag.tag %></a>
+      <a class="badge bg-secondary" data-controller="index" data-action="click->index#setTags" data-value="<%= tag.tag %>"><%= tag.tag %></a>
     <% end %>
   </div>
-
-  <br />
+  <br/>
 
   <%= form_tag(test_cases_search_path, method: :get, class: "d-flex") do %>
-    <%= text_field_tag(:search, params[:search], class: "form-control me-2", id: "search_field") %>
+    <%= text_field_tag(:search, params[:search], class: "form-control me-2", id: "tags_field") %>
     <%= submit_tag('Search', class: "btn btn-outline-success") %>
   <% end %>
 
@@ -44,9 +44,7 @@
               </div>
             </td>
             <td>
-              <% item.test_case_tags.each do |tag| %>
-                <small class="text-muted"><%= tag.tag %></small>
-              <% end %>
+              <small class="text-muted"><%= item.test_case_tags.map(&:tag).join(', ') %></small>
             </td>
             <td>
               <% if !item.to_test %>

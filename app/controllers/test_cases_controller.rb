@@ -8,14 +8,10 @@ class TestCasesController < ApplicationController
 
   def search
     @result = []
-    tags_for_search = params[:search].split(/[ ,]/).select { |it| !it.empty? }
-    test_cases = []
+    tags_for_search = params[:search].split(/[ ,]/).reject(&:empty?)
     tags_for_search.each do |tag|
-      current_tag = TestCaseTag.find_by_tag(tag)
-      test_cases += current_tag.test_cases
+      @result += TestCaseTag.find_by_tag(tag).test_cases if TestCaseTag.exists?(tag: tag.downcase)
     end
-
-    @result = test_cases
 
     respond_to do |format|
       format.html { render 'index' }
@@ -29,7 +25,7 @@ class TestCasesController < ApplicationController
 
   def create
     new_case = TestCase.create(name: params[:test_case][:name], steps: params[:test_case][:steps], to_test: false)
-    tags = params[:test_case][:tags].split(/[ ,]/).select { |it| !it.empty? }
+    tags = params[:test_case][:tags].split(/[ ,]/).reject(&:empty)
     tags.each do |tag|
       if TestCaseTag.exists?(tag: tag.downcase)
         new_case.test_case_tags << TestCaseTag.find_by_tag(tag)

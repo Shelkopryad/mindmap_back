@@ -2,17 +2,17 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
     connect() {
-        this.searchField = document.getElementById('search_field');
+        this.selectedTags = document.getElementById('tags_field');
     }
 
-    search(event) {
+    setTags(event) {
         const value = event.currentTarget.dataset.value;
-        let current = this.searchField.value;
+        let current = this.selectedTags.value;
         if (current === '') {
-            this.searchField.value = value;
+            this.selectedTags.value = value;
         } else {
             if (!current.includes(value)) {
-                this.searchField.value = current + ', ' + value;
+                this.selectedTags.value = current + ', ' + value;
             }
         }
     }

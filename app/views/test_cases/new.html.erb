@@ -9,10 +9,19 @@
       <%= form.label :steps %><br>
       <%= form.text_area :steps, class: "form-control", rows: "7" %>
     </div>
+    <br />
 
     <div>
-      <%= form.label :tags %><br>
-      <%= form.text_field :tags, class: "form-control", value: '' %>
+      <div>
+        <span>Available tags: </span>
+        <% TestCaseTag.all.each do |tag| %>
+          <a class="badge bg-secondary" data-controller="index" data-action="click->index#setTags" data-value="<%= tag.tag %>"><%= tag.tag %></a>
+        <% end %>
+      </div>
+      <div>
+        <%= form.label :tags %><br>
+        <%= form.text_field :tags, class: "form-control", value: '', id: 'tags_field' %>
+      </div>
     </div>
     <br/>
 
