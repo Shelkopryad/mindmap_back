@@ -1,10 +1,5 @@
 <div class="container">
-  <div>
-    <span>Available tags: </span>
-    <% TestCaseTag.all.each do |tag| %>
-      <a class="badge bg-secondary" data-controller="index" data-action="click->index#setTags" data-value="<%= tag.tag %>"><%= tag.tag %></a>
-    <% end %>
-  </div>
+  <%= render "all_tags_partial" %>
   <br/>
 
   <%= form_tag(test_cases_search_path, method: :get, class: "d-flex") do %>
@@ -19,10 +14,11 @@
       <table class="table">
         <thead>
         <tr>
-          <th class="col-8" scope="col">Task (clickable)</th>
+          <th class="col-7" scope="col">Task (clickable)</th>
           <th class="col-2" scope="col">Tags</th>
           <th class="col-1" scope="col">Tested</th>
           <th class="col-1" scope="col">To test?</th>
+          <th class="col-1" scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -54,6 +50,7 @@
               <% end %>
             </td>
             <td><%= check_box_tag("to_test #{item.id}".to_sym, item.id) %></td>
+            <td><%= link_to 'Edit', edit_test_case_path(item) %></td>
           </tr>
         <% end %>
         </tbody>

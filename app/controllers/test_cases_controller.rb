@@ -38,6 +38,17 @@ class TestCasesController < ApplicationController
     redirect_to new_test_case_path
   end
 
+  def edit
+    @test_case = TestCase.find(params[:id])
+  end
+
+  def update
+    test_case = TestCase.find(params[:id])
+    test_case.update(test_case_params)
+
+    redirect_to test_cases_path
+  end
+
   def select_to_test
     update_items params, to_test: true
 

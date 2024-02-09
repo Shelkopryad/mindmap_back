@@ -1,0 +1,6 @@
+<div>
+  <span>Available tags: </span>
+  <% TestCaseTag.all.each do |tag| %>
+    <a class="badge bg-secondary" data-controller="index" data-action="click->index#setTags" data-value="<%= tag.tag %>"><%= tag.tag %></a>
+  <% end %>
+</div>
