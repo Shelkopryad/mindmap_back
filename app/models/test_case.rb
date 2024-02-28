@@ -10,4 +10,8 @@ class TestCase < ApplicationRecord
   def self.in_test
     where(to_test: true)
   end
+
+  def self.categories
+    distinct.pluck(:category)
+  end
 end

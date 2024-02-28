@@ -1,6 +1,6 @@
-<%= render "test_case_partial"  do |form| %>
+<%= render "test_cases/partials/test_case_partial"  do |form| %>
   <div>
-    <%= render "all_tags_partial" %>
+    <%= render "test_cases/partials/all_tags_partial" %>
     <div>
       <%= form.label :tags %><br>
       <%= form.text_field :tags, class: "form-control", id: 'tags_field', value: '' %>

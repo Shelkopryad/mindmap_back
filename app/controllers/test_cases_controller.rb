@@ -3,18 +3,27 @@ class TestCasesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:index]
 
   def index
-    @result = []
+    @result = {
+      test_cases: [],
+      categories: TestCase.categories
+    }
   end
 
   def search
-    @result = []
+    @result = {
+      test_cases: [],
+      categories: TestCase.categories
+    }
     tags_for_search = params[:search].split(/[ ,]/).reject(&:empty?)
     tags_for_search.each do |tag|
-      @result << TestCase.by_tag(tag) if TestCaseTag.exists?(tag: tag.downcase)
+      @result[:test_cases] << TestCase.by_tag(tag) if TestCaseTag.exists?(tag: tag.downcase)
     end
 
-    @result.flatten!
     render :index
+  end
+
+  def categories
+    @categories = TestCase.categories
   end
 
   def new
@@ -58,11 +67,15 @@ class TestCasesController < ApplicationController
   def tested
     update_items params, to_test: false
 
-    redirect_to test_cases_selected_to_test_path
+    redirect_to selected_to_test_test_cases_path
   end
 
   def selected_to_test
     @selected = TestCase.in_test
+  end
+
+  def playground
+    render :playground
   end
 
   private

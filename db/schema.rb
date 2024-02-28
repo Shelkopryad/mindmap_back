@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_090649) do
 
   create_table "test_cases", force: :cascade do |t|
     t.string "name"
+    t.string "category"
     t.text "steps"
     t.boolean "to_test"
     t.datetime "created_at", null: false
